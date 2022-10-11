@@ -1,0 +1,65 @@
+def main():
+    file_name = 'chr1.csv'
+    aantal_genen(file_name)
+    groter_gc_perc_dan(file_name)
+    gemiddelde_lengte(file_name)
+
+
+def aantal_genen(file_name):
+    try:
+        file = open(file_name, encoding="utf-8")
+    except FileNotFoundError:
+        print("Inputted file not corresponding with expected item, please check file name.")
+
+    gc_count = -1  # minus 1 to compensate for headlines
+    for i in file:
+        gc_count += 1
+
+    print("The total number of genes in file is:", gc_count)
+
+
+def groter_gc_perc_dan(file_name):
+    try:
+        file2 = open(file_name, encoding="utf-8")
+    except FileNotFoundError:
+        print("Inputted file not corresponding with expected item, please check file name.")
+
+    gc_perc = []
+    for line1 in file2:
+        line1 = line1.strip().split(",")
+        gc_perc.append(line1[-1])
+    del(gc_perc[0])
+
+    res = [eval(i) for i in gc_perc]  # Converting list of strings to list of floats
+
+    gc_50_count = 0
+    for line2 in res:
+        if line2 > 50:
+            gc_50_count += 1
+
+    print("The number of gene percentages greater than 50 is:", gc_50_count)
+
+
+def gemiddelde_lengte(file_name):
+    try:
+        file = open(file_name, encoding="utf-8")
+    except FileNotFoundError:
+        print("Inputted file not corresponding with expected item, please check file name.")
+
+
+    total = 0
+    count = 0
+    next(file)
+    for line in file:
+        line = line.strip().split(",")
+        start = int(line[-3])
+        end = int(line[-2])
+        length = end - start
+        total += length
+        count += 1
+
+
+    print("The average gene length is:", total/count)
+
+
+main()
