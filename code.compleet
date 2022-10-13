@@ -1,5 +1,5 @@
 def main():
-    file_name = 'chr1.csv'
+    file_name = 'chr1.csv'  # Renaming file to: "file_name"
     aantal_genen(file_name)
     groter_gc_perc_dan(file_name)
     gemiddelde_lengte(file_name)
@@ -7,27 +7,28 @@ def main():
 
 def aantal_genen(file_name):
     try:
-        file = open(file_name, encoding="utf-8")
-    except FileNotFoundError:
+        file = open(file_name, encoding="utf-8")  # Opening and renaming file using utf-8 interpreter
+    except FileNotFoundError:  # Intercepting possible occurring errors
         print("Inputted file not corresponding with expected item, please check file name.")
 
-    gc_count = -1  # minus 1 to compensate for headlines
-    for i in file:
-        gc_count += 1
+    line_count = -1  # minus 1 to compensate for headlines
+    for i in file:  # Starting a loop to count the amount of items (genes in list)
+        line_count += 1
 
-    print("The total number of genes in file is:", gc_count)
+    print("The total number of genes in file is:", line_count)  # Print to provide user with the amount of counted genes
 
 
 def groter_gc_perc_dan(file_name):
     try:
-        file2 = open(file_name, encoding="utf-8")
-    except FileNotFoundError:
+        file2 = open(file_name, encoding="utf-8")  # Opening and renaming file using utf-8 interpreter
+    except FileNotFoundError:  # Intercepting possible occurring errors
         print("Inputted file not corresponding with expected item, please check file name.")
 
-    gc_perc = []
+    gc_perc = []  # Creating an empty list
     for line1 in file2:
         line1 = line1.strip().split(",")
         gc_perc.append(line1[-1])
+
     del(gc_perc[0])
 
     res = [eval(i) for i in gc_perc]  # Converting list of strings to list of floats
@@ -42,24 +43,24 @@ def groter_gc_perc_dan(file_name):
 
 def gemiddelde_lengte(file_name):
     try:
-        file = open(file_name, encoding="utf-8")
-    except FileNotFoundError:
+        file = open(file_name, encoding="utf-8")  # Opening and renaming file using utf-8 interpreter
+    except FileNotFoundError:  # Intercepting possible occurring errors
         print("Inputted file not corresponding with expected item, please check file name.")
-
 
     total = 0
     count = 0
     next(file)
     for line in file:
         line = line.strip().split(",")
-        start = int(line[-3])
-        end = int(line[-2])
-        length = end - start
-        total += length
-        count += 1
+        start = int(line[-3])  # Taking third to last object in line and changing type to integer
+        end = int(line[-2])  # Taking second to last object in line and changing type to integer
+        length = end - start  # Subtracting starting point from ending point to calculate the difference between them
+        total += length  # Adding length to the pile
+        count += 1  # Counting how many times a length has been added to the pile
 
+    avg = total/count  # Calculating average by dividing the sum of lengths by the amount of added lengths
 
-    print("The average gene length is:", total/count)
+    print("The average gene length is:", avg)
 
 
 main()
